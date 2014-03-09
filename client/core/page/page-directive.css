@@ -1,0 +1,45 @@
+body {
+    font-family: sans-serif;
+    background-color: #eee;
+}
+
+a {
+    text-decoration: none;
+}
+
+.lair-page-leftwell {
+    border-right: 1px solid lightgrey;
+    position: absolute;
+    width: 300px;
+    top: 101px;
+    left: 0;
+    bottom: 101px;
+    overflow-y: auto;
+}
+
+.lair-page-content {
+    position: absolute;
+    top: 101px;
+    left: 301px;
+    bottom: 101px;
+    right: 101px;
+    overflow: auto;
+}
+
+.lair-page-rightwell {
+    border-left: 1px solid lightgrey;
+    position: absolute;
+    width: 100px;
+    top: 101px;
+    bottom: 101px;
+    right: 0;
+}
+
+.lair-page-bottomwell {
+    height: 100px;
+    border-top: 1px solid lightgrey;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}

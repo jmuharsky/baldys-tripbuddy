@@ -1,0 +1,29 @@
+application: baldys-tripbuddy
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /src
+  static_dir: src
+
+- url: /components
+  static_dir: client/components
+
+- url: /core
+  static_dir: client/core
+
+- url: /client(.*\.(html))$
+  static_files: static/\1
+  upload: client/.*\.(html)$
+
+- url: /.*
+  script: server.pages.handler
+
+libraries:
+- name: webapp2
+  version: latest
+
+- name: jinja2
+  version: latest

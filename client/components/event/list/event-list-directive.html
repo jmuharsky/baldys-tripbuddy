@@ -1,0 +1,37 @@
+<div class="tbuddy-eventpanel tbuddy-eventpanel-{{ event.event_type }}"
+     ng-repeat="event in events">
+    <div style="float: left; margin-right: 8px;">
+        <div class="tbuddy-eventpanel-date-month">{{ months[event.date.getMonth()].short }}</div>
+        <div class="tbuddy-eventpanel-date-dayofweek">{{ days[event.date.getDay()].short }}</div>
+        <div class="tbuddy-eventpanel-date-dayofmonth">{{ event.date.getDate() }}</div>
+    </div>
+    <div style="float:right;">
+        ${{ getCost(event) | number:0 }}
+    </div>
+    <div class="tbuddy-eventpanel-title"
+         ng-switch="event.event_type">
+        <div ng-switch-when="driving">
+            {{ event.hours }}-hour drive from
+            <a target="content"
+               href="{{ event.start_location.url }}">{{ event.start_location.name }}</a>
+            to
+            <a target="content"
+               href="{{ event.end_location.url }}">{{ event.end_location.name }}</a>
+        </div>
+        <div ng-switch-when="hotel">
+            <span ng-show="event.nights == 1">Overnight</span>
+            <span ng-show="event.nights != 1">{{ event.nights }}-night</span>
+            stay at
+            <a target="content"
+               href="{{ event.location.url }}">{{ event.location.name }}</a>
+        </div>
+        <div class="tbuddy-eventpanel-linkbar">
+            <div ng-switch-when="driving">
+                <a href="{{ event.url }}" target="_blank">directions</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tbuddy-eventpanel" style="text-align: right; font-weight: bold;">
+    Total Price ${{ getTotalCost() | number:0 }}
+</div>
