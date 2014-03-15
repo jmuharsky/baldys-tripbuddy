@@ -17,3 +17,7 @@
 .lair-page-header-toolbar {
     padding: 4px;
 }
+
+.lair-page-header-toolbar-section {
+    float: left;
+}

@@ -1,5 +1,8 @@
 goog.provide('tripbuddy.components.PageSectionStates');
 
+goog.require('tripbuddy.components.location.list.LocationListViewCtrl');
+
+
 goog.scope(function() {
 
 /**
@@ -15,7 +18,8 @@ tripbuddy.components.PageSectionStates = function($stateProvider, $locationProvi
             url: '/events',
             views: {
                 'page.leftwell': { templateUrl: '/components/event/list/views/leftwell.html' },
-                'page.content': { templateUrl: '/components/event/list/views/content.html' },
+                'page.content': {
+                    templateUrl: '/components/event/list/views/content.html'},
                 'page.rightwell': { templateUrl: '/components/event/list/views/rightwell.html' },
                 'page.footer': { templateUrl: '/components/event/list/views/footer.html' },
                 'page.toolbar': { templateUrl: '/components/event/list/views/toolbar.html' }
@@ -35,7 +39,9 @@ tripbuddy.components.PageSectionStates = function($stateProvider, $locationProvi
             url: '/locations',
             views: {
                 'page.leftwell': { templateUrl: '/components/location/list/views/leftwell.html' },
-                'page.content': { templateUrl: '/components/location/list/views/content.html' },
+                'page.content': {
+                    templateUrl: '/components/location/list/views/content.html',
+                    controller: tripbuddy.components.location.list.LocationListViewCtrl},
                 'page.rightwell': { templateUrl: '/components/location/list/views/rightwell.html' },
                 'page.footer': { templateUrl: '/components/location/list/views/footer.html' },
                 'page.toolbar': { templateUrl: '/components/location/list/views/toolbar.html' }

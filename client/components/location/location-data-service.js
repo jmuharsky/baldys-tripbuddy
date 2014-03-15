@@ -10,6 +10,10 @@ goog.scope(function() {
 tripbuddy.components.location.LocationDataService = function($http) {
     this.http_ = $http;
 
+    /**
+     * @export
+     * @type {Array}
+     */
     this.locations = [];
 };
 var LocationDataService = tripbuddy.components.location.LocationDataService;
@@ -20,7 +24,9 @@ var LocationDataService = tripbuddy.components.location.LocationDataService;
 LocationDataService.prototype.list = function() {
     this.http_({method: 'get', url: '/data/location/list', responseType: 'json'}).
         success(angular.bind(this, function(data, status) {
-            this.locations = data;
+            // The array is merged, not replaced, to preserve bindings.
+            this.locations.splice(0, this.locations.length);
+            $.merge(this.locations, data);
         })).
         error(angular.bind(this, function(data, status) {
             console.log(status);

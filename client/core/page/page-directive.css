@@ -43,3 +43,8 @@ a {
     left: 0;
     right: 0;
 }
+
+.content-grid {
+    width: 100%;
+    height: 100%;
+}
