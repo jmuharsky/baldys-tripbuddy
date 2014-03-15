@@ -503,6 +503,19 @@ tripbuddy.core.page.PageStateService = function() {
   this.title = 'UNSET';
   this.activePage = 'events';
 };
+goog.provide('tripbuddy.core.page.PageHeaderDirective');
+goog.require('tripbuddy.core.page.PageStateService');
+tripbuddy.core.page.PageHeaderDirective = function($state, pageState) {
+  return{restrict:'E', templateUrl:'/core/page/page-header-directive.html', link:function(scope, el, attr) {
+    scope.pageState = pageState;
+    scope.$watch('pageState.activePage', angular.bind(this, function(new_val, old_val) {
+      if (new_val == old_val) {
+        return;
+      }
+      $state.go(new_val);
+    }));
+  }};
+};
 goog.provide('tripbuddy.components.event.EventListDirective');
 goog.require('tripbuddy.core.page.PageStateService');
 MPG = 24;
@@ -540,6 +553,45 @@ tripbuddy.components.event.EventListDirective = function(pageState, eventData) {
     scope.refresh();
   }};
 };
+goog.provide('tripbuddy.components.PageSectionStates');
+goog.scope(function() {
+  tripbuddy.components.PageSectionStates = function($stateProvider, $locationProvider) {
+    $stateProvider.state('events', {url:'/events', views:{'page.leftwell':{templateUrl:'/components/event/list/views/leftwell.html'}, 'page.content':{templateUrl:'/components/event/list/views/content.html'}, 'page.rightwell':{templateUrl:'/components/event/list/views/rightwell.html'}, 'page.footer':{templateUrl:'/components/event/list/views/footer.html'}, 'page.toolbar':{templateUrl:'/components/event/list/views/toolbar.html'}}}).state('event', {url:'/event/:eventId', views:{'page.leftwell':{templateUrl:'/components/event/detail/views/leftwell.html'}, 
+    'page.content':{templateUrl:'/components/event/detail/views/content.html'}, 'page.rightwell':{templateUrl:'/components/event/detail/views/rightwell.html'}, 'page.footer':{templateUrl:'/components/event/detail/views/footer.html'}, 'page.toolbar':{templateUrl:'/components/event/detail/views/toolbar.html'}}}).state('locations', {url:'/locations', views:{'page.leftwell':{templateUrl:'/components/location/list/views/leftwell.html'}, 'page.content':{templateUrl:'/components/location/list/views/content.html'}, 
+    'page.rightwell':{templateUrl:'/components/location/list/views/rightwell.html'}, 'page.footer':{templateUrl:'/components/location/list/views/footer.html'}, 'page.toolbar':{templateUrl:'/components/location/list/views/toolbar.html'}}}).state('location', {url:'/location/:locationId', views:{'page.leftwell':{templateUrl:'/components/location/detail/views/leftwell.html'}, 'page.content':{templateUrl:'/components/location/detail/views/content.html'}, 'page.rightwell':{templateUrl:'/components/location/detail/views/rightwell.html'}, 
+    'page.footer':{templateUrl:'/components/location/detail/views/footer.html'}, 'page.toolbar':{templateUrl:'/components/location/detail/views/toolbar.html'}}});
+    $locationProvider.html5Mode(true);
+  };
+});
+goog.provide('tripbuddy.components.location.LocationDataService');
+goog.scope(function() {
+  tripbuddy.components.location.LocationDataService = function($http) {
+    this.http_ = $http;
+    this.locations = [];
+  };
+  var LocationDataService = tripbuddy.components.location.LocationDataService;
+  LocationDataService.prototype.list = function() {
+    this.http_({method:'get', url:'/data/location/list', responseType:'json'}).success(angular.bind(this, function(data, status) {
+      this.locations = data;
+    })).error(angular.bind(this, function(data, status) {
+      console.log(status);
+    }));
+  };
+});
+goog.provide('tripbuddy.components.location.list.LocationListDirective');
+goog.require('tripbuddy.components.location.LocationDataService');
+goog.require('tripbuddy.core.page.PageStateService');
+goog.scope(function() {
+  tripbuddy.components.location.list.LocationListDirective = function(pageState, locationData) {
+    return{restrict:'E', templateUrl:'/components/location/list/location-list-directive.html', link:function(scope, el, attr) {
+      scope.locationData = locationData;
+      scope.refresh = function() {
+        locationData.list();
+      };
+      scope.refresh();
+    }};
+  };
+});
 goog.provide('tripbuddy.core.page.PageDirective');
 goog.require('tripbuddy.core.page.PageStateService');
 tripbuddy.core.page.PageDirective = function(pageState, $state) {
@@ -558,39 +610,28 @@ tripbuddy.components.event.EventDataService = function($q, $timeout) {
   };
   this.activePage = 'events';
 };
-SAMPLE_DATA = [{'event_type':'driving', 'start_location':{'name':'Home', 'address':'27229 NE 145th S., Duvall WA 98019', 'url':'http://goo.gl/maps/WJ6c0'}, 'end_location':{'name':'Kalispell', 'address':'350 N Main St Kalispell, MT, 59901', 'url':'http://goo.gl/maps/UYpl0'}, 'url':'http://goo.gl/maps/cHsYd', 'date':new Date(2014, 6, 18), 'distance':525, 'hours':9}, {event_type:'hotel', 'location':{'name':'Travelodge Kalispell', 'address':'350 N Main St Kalispell, MT, 59901', 'url':'http://www.hotels.com/hotel/details.html?pa=7&pn=1&ps=7&tab=description&destinationId=1435619&searchDestination=Kalispell&hotelId=255442&arrivalDate=07-18-14&departureDate=07-19-14&children[0]=2&rooms[0].childrenAges[0]=7&rooms[0].childrenAges[1]=14&rooms[0].numberOfAdults=2&roomno=1&validate=false&previousDateful=false&reviewOrder=date_newest_first'}, 
-'date':new Date(2014, 6, 18), 'nightly_price':150, 'nights':1}, {'event_type':'driving', 'start_location':{'name':'Kalispell', 'address':'350 N Main St Kalispell, MT, 59901', 'url':'http://goo.gl/maps/UYpl0'}, 'end_location':{'name':'Glacier National Park', 'address':'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434', 'url':'http://goo.gl/maps/L6w2J'}, 'url':'http://goo.gl/maps/7sSEY', 'date':new Date(2014, 6, 19), 'distance':525, 'hours':4}, {'event_type':'hotel', 'location':{'name':'Many Glacier Hotel', 
-'address':'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434', 'url':'https://www.nationalparkreservations.com/lodge/glacier-many-glacier-hotel'}, 'date':new Date(2014, 6, 19), 'nightly_price':250, 'nights':2}, {'event_type':'driving', 'start_location':{'name':'Many Glacier Hotel', 'address':'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434', 'url':'https://www.nationalparkreservations.com/lodge/glacier-many-glacier-hotel'}, 'end_location':{'name':'Sheridan', 'address':'', 
-'url':''}, 'url':'http://goo.gl/maps/g6pMH', 'date':new Date(2014, 6, 21), 'distance':525, 'hours':8}, {'event_type':'hotel', 'location':{'name':'A Sheridan Hotel', 'address':'', 'url':''}, 'date':new Date(2014, 6, 21), 'nightly_price':250, 'nights':1}, {'event_type':'driving', 'start_location':{'name':'Sheridan', 'address':'', 'url':''}, 'end_location':{'name':'Rapid City', 'address':'', 'url':''}, 'url':'http://goo.gl/maps/7GGI9', 'date':new Date(2014, 6, 22), 'distance':250, 'hours':3.5}, {'event_type':'hotel', 
-'location':{'name':'A Rapid City Hotel', 'address':'', 'url':''}, 'date':new Date(2014, 6, 22), 'nightly_price':200, 'nights':3}, {'event_type':'driving', 'start_location':{'name':'Rapid City', 'address':'', 'url':''}, 'end_location':{'name':'St. Paul', 'address':'', 'url':''}, 'url':'http://goo.gl/maps/7GGI9', 'date':new Date(2014, 6, 25), 'distance':600, 'hours':8.5}];
-goog.provide('tripbuddy.core.page.PageHeaderDirective');
-goog.require('tripbuddy.core.page.PageStateService');
-tripbuddy.core.page.PageHeaderDirective = function($state, pageState) {
-  return{restrict:'E', templateUrl:'/core/page/page-header-directive.html', link:function(scope, el, attr) {
-    scope.pageState = pageState;
-    scope.$watch('pageState.activePage', angular.bind(this, function(new_val, old_val) {
-      if (new_val == old_val) {
-        return;
-      }
-      $state.go(new_val);
-    }));
-  }};
-};
+SAMPLE_DATA = [{'id':1, 'event_type':'driving', 'start_location':{'name':'Home', 'address':'27229 NE 145th S., Duvall WA 98019', 'url':'http://goo.gl/maps/WJ6c0'}, 'end_location':{'name':'Kalispell', 'address':'350 N Main St Kalispell, MT, 59901', 'url':'http://goo.gl/maps/UYpl0'}, 'url':'http://goo.gl/maps/cHsYd', 'date':new Date(2014, 6, 18), 'distance':525, 'hours':9}, {'id':2, 'event_type':'hotel', 'location':{'name':'Travelodge Kalispell', 'address':'350 N Main St Kalispell, MT, 59901', 'url':'http://www.hotels.com/hotel/details.html?pa=7&pn=1&ps=7&tab=description&destinationId=1435619&searchDestination=Kalispell&hotelId=255442&arrivalDate=07-18-14&departureDate=07-19-14&children[0]=2&rooms[0].childrenAges[0]=7&rooms[0].childrenAges[1]=14&rooms[0].numberOfAdults=2&roomno=1&validate=false&previousDateful=false&reviewOrder=date_newest_first'}, 
+'date':new Date(2014, 6, 18), 'nightly_price':150, 'nights':1}, {'id':3, 'event_type':'driving', 'start_location':{'name':'Kalispell', 'address':'350 N Main St Kalispell, MT, 59901', 'url':'http://goo.gl/maps/UYpl0'}, 'end_location':{'name':'Glacier National Park', 'address':'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434', 'url':'http://goo.gl/maps/L6w2J'}, 'url':'http://goo.gl/maps/7sSEY', 'date':new Date(2014, 6, 19), 'distance':525, 'hours':4}, {'id':3, 'event_type':'hotel', 'location':{'name':'Many Glacier Hotel', 
+'address':'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434', 'url':'https://www.nationalparkreservations.com/lodge/glacier-many-glacier-hotel'}, 'date':new Date(2014, 6, 19), 'nightly_price':250, 'nights':2}, {'id':3, 'event_type':'driving', 'start_location':{'name':'Many Glacier Hotel', 'address':'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434', 'url':'https://www.nationalparkreservations.com/lodge/glacier-many-glacier-hotel'}, 'end_location':{'name':'Sheridan', 'address':'', 
+'url':''}, 'url':'http://goo.gl/maps/g6pMH', 'date':new Date(2014, 6, 21), 'distance':525, 'hours':8}, {'id':3, 'event_type':'hotel', 'location':{'name':'A Sheridan Hotel', 'address':'', 'url':''}, 'date':new Date(2014, 6, 21), 'nightly_price':250, 'nights':1}, {'id':3, 'event_type':'driving', 'start_location':{'name':'Sheridan', 'address':'', 'url':''}, 'end_location':{'name':'Rapid City', 'address':'', 'url':''}, 'url':'http://goo.gl/maps/7GGI9', 'date':new Date(2014, 6, 22), 'distance':250, 'hours':3.5}, 
+{'id':3, 'event_type':'hotel', 'location':{'name':'A Rapid City Hotel', 'address':'', 'url':''}, 'date':new Date(2014, 6, 22), 'nightly_price':200, 'nights':3}, {'id':3, 'event_type':'driving', 'start_location':{'name':'Rapid City', 'address':'', 'url':''}, 'end_location':{'name':'St. Paul', 'address':'', 'url':''}, 'url':'http://goo.gl/maps/7GGI9', 'date':new Date(2014, 6, 25), 'distance':600, 'hours':8.5}];
 goog.provide('tripbuddy.app');
 goog.require('tripbuddy.components.event.EventDataService');
 goog.require('tripbuddy.components.event.EventListDirective');
+goog.require('tripbuddy.components.location.LocationDataService');
+goog.require('tripbuddy.components.location.list.LocationListDirective');
+goog.require('tripbuddy.components.PageSectionStates');
 goog.require('tripbuddy.core.page.PageDirective');
 goog.require('tripbuddy.core.page.PageHeaderDirective');
 goog.require('tripbuddy.core.page.PageStateService');
 tripbuddy.app = angular.module('tripbuddy', ['ui.router', 'ui.bootstrap']);
 tripbuddy.app.service('pageState', tripbuddy.core.page.PageStateService);
 tripbuddy.app.service('eventData', tripbuddy.components.event.EventDataService);
+tripbuddy.app.service('locationData', tripbuddy.components.location.LocationDataService);
+tripbuddy.app.controller('pageCtrl', tripbuddy.core.page.PageController);
 tripbuddy.app.directive('page', tripbuddy.core.page.PageDirective);
 tripbuddy.app.directive('pageHeader', tripbuddy.core.page.PageHeaderDirective);
 tripbuddy.app.directive('eventList', tripbuddy.components.event.EventListDirective);
-tripbuddy.app.config(function($stateProvider, $locationProvider) {
-  $stateProvider.state('events', {url:'/events', views:{'page.leftwell':{templateUrl:'/components/event/list/actions-view.html'}, 'page.content':{templateUrl:'/components/event/list/content-view.html'}}}).state('event', {url:'/event/:eventId', views:{'page.leftwell':{templateUrl:'/components/event/detail/actions-view.html'}, 'page.content':{templateUrl:'/components/event/detail/content-view.html'}}}).state('locations', {url:'/locations', views:{'page.leftwell':{templateUrl:'/components/location/list/actions-view.html'}, 
-  'page.content':{templateUrl:'/components/location/list/content-view.html'}}}).state('location', {url:'/location/:locationId', views:{'page.leftwell':{templateUrl:'/components/location/detail/actions-view.html'}, 'page.content':{templateUrl:'/components/location/detail/content-view.html'}}});
-  $locationProvider.html5Mode(true);
-});
+tripbuddy.app.directive('locationList', tripbuddy.components.location.list.LocationListDirective);
+tripbuddy.app.config(tripbuddy.components.PageSectionStates);
 

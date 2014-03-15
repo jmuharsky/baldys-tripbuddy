@@ -18,6 +18,9 @@ handlers:
   static_files: static/\1
   upload: client/.*\.(html)$
 
+- url: /data/location/.*
+  script: server.location.handler
+
 - url: /.*
   script: server.pages.handler
 
