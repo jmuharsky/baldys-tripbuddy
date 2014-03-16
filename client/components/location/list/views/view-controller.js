@@ -15,16 +15,7 @@ goog.scope(function() {
 
         $scope.oldLocation = null;
 
-        $scope.gridOptions = {
-            data: 'data',
-            enableRowSelection: true,
-            multiSelect: false,
-            enableCellEdit: true,
-            enableCellEditOnFocus: true,
-            columnDefs: [
-                {field: 'id', displayName: 'ID', enableCellEdit: false, enableCellSelection: false},
-                {field:'name', displayName:'Name', enableCellEdit: true, enableCellSelection: true}]
-        };
+        $scope.gridOptions = locationData.gridOptions;
 
         /**
          * @export
@@ -36,9 +27,32 @@ goog.scope(function() {
         /**
          * @export
          */
+        $scope.open = function() {
+            console.log('open');
+            if ($scope.gridOptions.selectedItems && $scope.gridOptions.selectedItems.length == 1) {
+                console.log($scope.gridOptions.selectedItems[0]);
+            } else {
+                console.log('failed: Need one selectedItem.');
+                console.log($scope.gridOptions);
+                console.log($scope.data);
+            }
+        };
+
+        /**
+         * @export
+         */
         $scope.create = function() {
             console.log('create');
-            locationData.save({'name': 'new creation.'});
+            locationData.save({'name': 'Untitled location'});
+        };
+
+        /**
+         * @export
+         */
+        $scope.delete = function() {
+            if (window.confirm('Are you sure you want to delete this location?  This action cannot be undone.')) {
+                locationData.delete($scope.gridOptions.selectedItems[0]);
+            }
         };
 
         $scope.$on('ngGridEventEndCellEdit', function(evt){
@@ -54,9 +68,6 @@ goog.scope(function() {
             $scope.oldLocation = angular.copy(evt.targetScope.row.entity);
         });
 
-        /**
-         * @export
-         */
         $scope.refresh();
     };
     var LocationListViewCtrl = tripbuddy.components.location.list.LocationListViewCtrl;

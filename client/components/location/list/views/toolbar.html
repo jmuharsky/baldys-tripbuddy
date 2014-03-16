@@ -1,4 +1,4 @@
 <button type="button" class="btn btn-primary" ng-click="create()">Create</button>
-<button type="button" class="btn" ng-click="open()">Open</button>
-<button type="button" class="btn" ng-click="showMap()">Map</button>
-<button type="button" class="btn btn-danger" ng-click="delete()">Delete</button>
+<button type="button" class="btn" ng-click="open()" ng-show="gridOptions.selectedItems.length == 1">Open</button>
+<button type="button" class="btn" ng-click="showMap()" ng-show="gridOptions.selectedItems.length == 1">Map</button>
+<button type="button" class="btn btn-danger" ng-click="delete()" ng-show="gridOptions.selectedItems.length > 0">Delete</button>

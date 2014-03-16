@@ -6,6 +6,13 @@ goog.provide('tripbuddy.core.util.HttpPostFix');
 
 goog.scope(function() {
 
+/**
+ *
+ * @param $httpProvider
+ * @ngInject
+ * @export
+ * @constructor
+ */
 tripbuddy.core.util.HttpPostFix = function($httpProvider) {
 
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';

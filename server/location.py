@@ -27,6 +27,9 @@ class ListHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.dumps(data))
 
+    def post(self):
+        self.get()
+
 
 class CreateHandler(webapp2.RequestHandler):
 
@@ -99,6 +102,9 @@ class DeleteHandler(webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.dumps(data))
+
+    def post(self):
+        self.get()
 
 
 handler = webapp2.WSGIApplication([
