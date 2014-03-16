@@ -39,12 +39,13 @@ tripbuddy.components.PageSectionStates = function($stateProvider, $locationProvi
             url: '/locations',
             views: {
                 'page.leftwell': { templateUrl: '/components/location/list/views/leftwell.html' },
+                'page.toolbar': { templateUrl: '/components/location/list/views/toolbar.html',
+                    controller: 'locationListViewCtrl'},
                 'page.content': {
                     templateUrl: '/components/location/list/views/content.html',
-                    controller: tripbuddy.components.location.list.LocationListViewCtrl},
+                    controller: 'locationListViewCtrl'},
                 'page.rightwell': { templateUrl: '/components/location/list/views/rightwell.html' },
-                'page.footer': { templateUrl: '/components/location/list/views/footer.html' },
-                'page.toolbar': { templateUrl: '/components/location/list/views/toolbar.html' }
+                'page.footer': { templateUrl: '/components/location/list/views/footer.html' }
             }
         })
         .state('location', {

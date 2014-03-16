@@ -15,6 +15,13 @@ tripbuddy.core.page.PageDirective = function(pageState, $state) {
         templateUrl: '/core/page/page-directive.html',
         link: function(scope, el, attr) {
             scope.pageState = pageState;
+
+            scope.$watch(
+                'pageState.activePage',
+                angular.bind(this, function(new_val, old_val) {
+                    if (new_val == old_val) { return; }
+                    $state.go(new_val);
+                }));
         }
     }
 };

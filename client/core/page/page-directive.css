@@ -7,22 +7,49 @@ a {
     text-decoration: none;
 }
 
+.lair-page-header {
+    border-bottom: 1px solid lightgrey;
+    position: absolute;
+    height: 76px;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.lair-page-header-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 4px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.lair-page-header-toolbar {
+    padding: 4px;
+}
+
+.lair-page-header-toolbar-section {
+    float: left;
+    padding-right: 8px;
+    border-right: 1px solid lightgrey;
+    margin-right: 8px;
+}
+
 .lair-page-leftwell {
     border-right: 1px solid lightgrey;
     position: absolute;
     width: 300px;
-    top: 101px;
+    top: 76px;
     left: 0;
-    bottom: 101px;
+    bottom: 100px;
     overflow-y: auto;
 }
 
 .lair-page-content {
     position: absolute;
-    top: 101px;
-    left: 301px;
-    bottom: 101px;
-    right: 101px;
+    top: 76px;
+    left: 300px;
+    bottom: 100px;
+    right: 100px;
     overflow: auto;
 }
 
@@ -30,8 +57,8 @@ a {
     border-left: 1px solid lightgrey;
     position: absolute;
     width: 100px;
-    top: 101px;
-    bottom: 101px;
+    top: 76px;
+    bottom: 100px;
     right: 0;
 }
 

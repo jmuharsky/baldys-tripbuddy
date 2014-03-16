@@ -25,11 +25,22 @@ goog.scope(function() {
          */
         this.locationData_ = locationData;
 
-        this.refresh();
+        /**
+         * @export
+         */
+        $scope.refresh =  function() {
+            locationData.list();
+        };
+
+        /**
+         * @export
+         */
+        $scope.create = function() {
+            console.log('create');
+            locationData.save({'name': 'new creation.'});
+        };
+        $scope.refresh();
     };
     var LocationListViewCtrl = tripbuddy.components.location.list.LocationListViewCtrl;
 
-    LocationListViewCtrl.prototype.refresh = function() {
-        this.locationData_.list();
-    }
 });  // goog.scope

@@ -2,6 +2,7 @@ import os
 import urllib
 
 import json
+import logging
 
 from models import location
 
@@ -42,6 +43,9 @@ class CreateHandler(webapp2.RequestHandler):
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.dumps(data))
+
+    def post(self):
+        self.get()
 
 
 class DeleteHandler(webapp2.RequestHandler):

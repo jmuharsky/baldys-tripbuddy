@@ -1,5 +1,12 @@
 <div class="lair-page-header">
-    <page-header></page-header>
+    <div class="lair-page-header-title">TripBuddy - {{ pageState.title }}</div>
+    <div class="lair-page-header-toolbar">
+        <div class="btn-group lair-page-header-toolbar-section">
+            <button type="button" class="btn" ng-model="pageState.activePage" btn-radio="'locations'">Locations</button>
+            <button type="button" class="btn" ng-model="pageState.activePage" btn-radio="'events'">Events</button>
+        </div>
+        <div class="lair-page-header-toolbar-section" ui-view="page.toolbar"></div>
+    </div>
 </div>
 <div class="lair-page-leftwell">
     <ui-view ui-view="page.leftwell" />

@@ -4,7 +4,7 @@ from google.appengine.ext import ndb
 
 class Event(ndb.Model):
   name = ndb.StringProperty(required=True)
-  type = ndb.StrigProperty(required=True)
+  type = ndb.StringProperty(required=True)
   start_location = ndb.KeyProperty(kind=location.Location)
   start_datetime = ndb.DateTimeProperty()
   end_location = ndb.KeyProperty(kind=location.Location)

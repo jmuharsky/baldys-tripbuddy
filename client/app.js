@@ -7,6 +7,7 @@ goog.require('tripbuddy.components.PageSectionStates');
 goog.require('tripbuddy.core.page.PageDirective');
 goog.require('tripbuddy.core.page.PageHeaderDirective');
 goog.require('tripbuddy.core.page.PageStateService');
+goog.require('tripbuddy.core.util.HttpPostFix');
 
 tripbuddy.app = angular.module('tripbuddy', ['ui.router', 'ui.bootstrap', 'ngGrid']);
 
@@ -26,3 +27,4 @@ tripbuddy.app.directive('eventList', tripbuddy.components.event.EventListDirecti
 
 /** Register UI and state routing */
 tripbuddy.app.config(tripbuddy.components.PageSectionStates);
+tripbuddy.app.config(tripbuddy.core.util.HttpPostFix)

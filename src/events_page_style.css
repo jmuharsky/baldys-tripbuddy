@@ -1,1 +1,110 @@
-body{font-family:sans-serif;background-color:#eee}a{text-decoration:none}.lair-page-leftwell{border-right:1px solid lightgrey;position:absolute;width:300px;top:101px;left:0;bottom:101px;overflow-y:auto}.lair-page-content{position:absolute;top:101px;left:301px;bottom:101px;right:101px;overflow:auto}.lair-page-rightwell{border-left:1px solid lightgrey;position:absolute;width:100px;top:101px;bottom:101px;right:0}.lair-page-bottomwell{height:100px;border-top:1px solid lightgrey;position:absolute;bottom:0;left:0;right:0}.content-grid{width:100%;height:100%}.lair-page-header{border-bottom:1px solid lightgrey;position:absolute;height:100px;top:0;left:0;right:0}.lair-page-header-title{font-size:1.2em;font-weight:bold;padding:4px;border-bottom:1px solid lightgrey}.lair-page-header-toolbar{padding:4px}.lair-page-header-toolbar-section{float:left}.tbuddy-eventpanel{padding:4px;margin:4px;border-bottom:1px solid;min-height:85px}.tbuddy-eventpanel-title{margin-right:16px}.tbuddy-eventpanel-linkbar{font-size:.9em;margin-right:16px}.tbuddy-eventpanel-note{margin-right:16px}.tbuddy-eventpanel-driving,.tbuddy-eventpanel-hotel{border-color:lightgrey}.tbuddy-eventpanel-date-dayofweek{text-align:center;float:left;font-size:.9em;margin-left:3px}.tbuddy-eventpanel-date-dayofmonth{font-weight:bold;text-align:center;font-size:3.2em;margin:0;padding:0}.tbuddy-eventpanel-date-month{text-align:center;float:right;font-size:.9em;margin-right:3px}iframe#content{border:0;height:100%;width:100%}
+body {
+  font-family: sans-serif;
+  background-color: #eee;
+}
+a {
+  text-decoration: none;
+}
+.lair-page-leftwell {
+  border-right: 1px solid lightgrey;
+  position: absolute;
+  width: 300px;
+  top: 76px;
+  left: 0;
+  bottom: 100px;
+  overflow-y: auto;
+}
+.lair-page-content {
+  position: absolute;
+  top: 76px;
+  left: 300px;
+  bottom: 100px;
+  right: 100px;
+  overflow: auto;
+}
+.lair-page-rightwell {
+  border-left: 1px solid lightgrey;
+  position: absolute;
+  width: 100px;
+  top: 76px;
+  bottom: 100px;
+  right: 0;
+}
+.lair-page-bottomwell {
+  height: 100px;
+  border-top: 1px solid lightgrey;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.content-grid {
+  width: 100%;
+  height: 100%;
+}
+.lair-page-header {
+  border-bottom: 1px solid lightgrey;
+  position: absolute;
+  height: 76px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.lair-page-header-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 4px;
+  border-bottom: 1px solid lightgrey;
+}
+.lair-page-header-toolbar {
+  padding: 4px;
+}
+.lair-page-header-toolbar-section {
+  float: left;
+  padding-right: 8px;
+  border-right: 1px solid lightgrey;
+  margin-right: 8px;
+}
+.tbuddy-eventpanel {
+  padding: 4px;
+  margin: 4px;
+  border-bottom: 1px solid;
+  min-height: 85px;
+}
+.tbuddy-eventpanel-title {
+  margin-right: 16px;
+}
+.tbuddy-eventpanel-linkbar {
+  font-size: .9em;
+  margin-right: 16px;
+}
+.tbuddy-eventpanel-note {
+  margin-right: 16px;
+}
+.tbuddy-eventpanel-driving, .tbuddy-eventpanel-hotel {
+  border-color: lightgrey;
+}
+.tbuddy-eventpanel-date-dayofweek {
+  text-align: center;
+  float: left;
+  font-size: .9em;
+  margin-left: 3px;
+}
+.tbuddy-eventpanel-date-dayofmonth {
+  font-weight: bold;
+  text-align: center;
+  font-size: 3.2em;
+  margin: 0;
+  padding: 0;
+}
+.tbuddy-eventpanel-date-month {
+  text-align: center;
+  float: right;
+  font-size: .9em;
+  margin-right: 3px;
+}
+iframe#content {
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
