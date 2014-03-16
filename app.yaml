@@ -14,6 +14,9 @@ handlers:
 - url: /core
   static_dir: client/core
 
+- url: /lib
+  static_dir: lib
+
 - url: /client(.*\.(html))$
   static_files: static/\1
   upload: client/.*\.(html)$

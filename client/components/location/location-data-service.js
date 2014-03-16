@@ -39,6 +39,7 @@ LocationDataService.prototype.list = function() {
  * @param location
  */
 LocationDataService.prototype.save = function(location) {
+    console.log(location);
     if (location['id']) {
         this.update(location);
     } else {
@@ -54,9 +55,6 @@ LocationDataService.prototype.save = function(location) {
 LocationDataService.prototype.create = function(location) {
     this.http_({method: 'post', url: '/data/location/create', responseType: 'json', data: location}).
         success(angular.bind(this, function(data, status) {
-            console.log('data: ');
-            console.log(data);
-            console.log('location: ');
             location['id'] = data['id'];
             this.locations.push(location);
         })).
@@ -65,5 +63,21 @@ LocationDataService.prototype.create = function(location) {
             console.log(data);
         }));
 };
+
+    /**
+     *
+     * @param location
+     * @export
+     */
+    LocationDataService.prototype.update = function(location) {
+        this.http_({method: 'post', url: '/data/location/update', responseType: 'json', data: location}).
+            success(angular.bind(this, function(data, status) {
+                console.log(data);
+            })).
+            error(angular.bind(this, function(data, status) {
+                console.log(status);
+                console.log(data);
+            }));
+    };
 
 });  // goog.scope

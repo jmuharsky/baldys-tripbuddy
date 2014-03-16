@@ -11,19 +11,20 @@ goog.scope(function() {
      * @constructor
      */
     tripbuddy.components.location.list.LocationListViewCtrl = function($scope, locationData) {
-        this.scope_ = $scope;
-
         $scope.data = locationData.locations;
 
-        $scope.gridOptions = {
-            data: 'data'
-        };
+        $scope.oldLocation = null;
 
-        /**
-         * @type {LocationDataService}
-         * @private
-         */
-        this.locationData_ = locationData;
+        $scope.gridOptions = {
+            data: 'data',
+            enableRowSelection: true,
+            multiSelect: false,
+            enableCellEdit: true,
+            enableCellEditOnFocus: true,
+            columnDefs: [
+                {field: 'id', displayName: 'ID', enableCellEdit: false, enableCellSelection: false},
+                {field:'name', displayName:'Name', enableCellEdit: true, enableCellSelection: true}]
+        };
 
         /**
          * @export
@@ -39,6 +40,23 @@ goog.scope(function() {
             console.log('create');
             locationData.save({'name': 'new creation.'});
         };
+
+        $scope.$on('ngGridEventEndCellEdit', function(evt){
+            var updatedLocation = evt.targetScope.row.entity
+            var needs_update = !angular.equals($scope.oldLocation, updatedLocation);
+
+            if (needs_update) {
+                locationData.save(updatedLocation);
+            }
+        });
+
+        $scope.$on('ngGridEventStartCellEdit', function(evt){
+            $scope.oldLocation = angular.copy(evt.targetScope.row.entity);
+        });
+
+        /**
+         * @export
+         */
         $scope.refresh();
     };
     var LocationListViewCtrl = tripbuddy.components.location.list.LocationListViewCtrl;

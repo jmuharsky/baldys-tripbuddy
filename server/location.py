@@ -48,6 +48,39 @@ class CreateHandler(webapp2.RequestHandler):
         self.get()
 
 
+class UpdateHandler(webapp2.RequestHandler):
+
+    def get(self):
+        id = int(self.request.get('id'))
+        name = self.request.get('name')
+
+        errors = []
+
+        if not id:
+            errors.append({'message': 'The "id" parameter is required.'})
+        if not name:
+            errors.append({'message': 'The "name" parameter is required.'})
+
+        if errors:
+            data = {'errors': errors}
+        else:
+            found_location = location.Location.get_by_id(id)
+
+            if not found_location:
+                data = {'errors': [{'message': 'id %s is not found.' % id}]}
+            else:
+                found_location.name = name
+                found_location.put()
+
+                data = {'message': 'Location updated.'}
+
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.write(json.dumps(data))
+
+    def post(self):
+        self.get()
+
+
 class DeleteHandler(webapp2.RequestHandler):
 
     def get(self):
@@ -71,5 +104,6 @@ class DeleteHandler(webapp2.RequestHandler):
 handler = webapp2.WSGIApplication([
     ('/data/location/list', ListHandler),
     ('/data/location/create', CreateHandler),
+    ('/data/location/update', UpdateHandler),
     ('/data/location/delete', DeleteHandler),
 ], debug=True)
