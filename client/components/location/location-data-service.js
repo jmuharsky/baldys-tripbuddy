@@ -25,10 +25,18 @@ tripbuddy.components.location.LocationDataService = function($http) {
         enableRowSelection: true,
         multiSelect: false,
         enableCellEdit: true,
-        enableCellEditOnFocus: true,
         columnDefs: [
             {field: 'id', displayName: 'ID', enableCellEdit: false, enableCellSelection: false},
-            {field:'name', displayName:'Name', enableCellEdit: true, enableCellSelection: true}],
+            {field:'name', displayName:'Name', enableCellEdit: true, enableCellSelection: true},
+            {field:'address.street', displayName:'Street', enableCellEdit: true, enableCellSelection: true},
+            {field:'address.city', displayName:'City', enableCellEdit: true, enableCellSelection: true},
+            {field:'address.state', displayName:'State', enableCellEdit: true, enableCellSelection: true},
+            {field:'address.zip', displayName:'Zip', enableCellEdit: true, enableCellSelection: true},
+            {field:'geopt.lat', displayName:'Latitude', enableCellEdit: true, enableCellSelection: true},
+            {field:'geopt.lon', displayName:'Longitude', enableCellEdit: true, enableCellSelection: true},
+            {field:'image_url', displayName:'Feature Image URL', enableCellEdit: true, enableCellSelection: true},
+            {field:'url', displayName:'Web URL', enableCellEdit: true, enableCellSelection: true},
+            {field:'notes', displayName:'Notes', enableCellEdit: true, enableCellSelection: true}],
         selectedItems: []
     };
 };
@@ -38,7 +46,7 @@ var LocationDataService = tripbuddy.components.location.LocationDataService;
  * @export
  */
 LocationDataService.prototype.list = function() {
-    this.http_({method: 'post', url: '/data/location/list', responseType: 'json'}).
+    this.http_({method: 'get', url: '/data/location/list', responseType: 'json'}).
         success(angular.bind(this, function(data, status) {
             // The array is merged, not replaced, to preserve bindings.
             this.locations.splice(0, this.locations.length);
@@ -70,7 +78,7 @@ LocationDataService.prototype.save = function(location) {
  * @export
  */
 LocationDataService.prototype.create = function(location) {
-    this.http_({method: 'post', url: '/data/location/create', responseType: 'json', data: location}).
+    this.http_({method: 'post', url: '/data/location/create', responseType: 'json', data: {'location': location}}).
         success(angular.bind(this, function(data, status) {
             location['id'] = data['id'];
             this.locations.push(location);
@@ -87,7 +95,7 @@ LocationDataService.prototype.create = function(location) {
  * @export
  */
 LocationDataService.prototype.update = function(location) {
-    this.http_({method: 'post', url: '/data/location/update', responseType: 'json', data: location}).
+    this.http_({method: 'post', url: '/data/location/update', responseType: 'json', data: {'location': location}}).
         success(angular.bind(this, function(data, status) {
             console.log(data);
         })).
@@ -105,7 +113,7 @@ LocationDataService.prototype.update = function(location) {
 LocationDataService.prototype.delete = function(location) {
     var data = {'id': location['id']};
 
-    this.http_({method: 'post', url: '/data/location/delete', responseType: 'json', data: data}).
+    this.http_({method: 'get', url: '/data/location/delete', responseType: 'json', data: data}).
         success(angular.bind(this, function(data, status) {
             this.locations.splice(this.locations.indexOf(location), 1);
             console.log(data);

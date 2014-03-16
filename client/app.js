@@ -25,4 +25,4 @@ tripbuddy.app.directive('eventList', tripbuddy.components.event.EventListDirecti
 
 /** Register UI and state routing */
 tripbuddy.app.config(tripbuddy.components.PageSectionStates);
-tripbuddy.app.config(tripbuddy.core.util.HttpPostFix);
+//tripbuddy.app.config(tripbuddy.core.util.HttpPostFix);
