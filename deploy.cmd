@@ -40,7 +40,6 @@ ECHO Compiling CSS files...
 java -jar bin/gss-compiler.jar^
  --output-file src/events_page_style.css^
  client/core/page/page-directive.css^
- client/core/page/page-header-directive.css^
  client/components/event/list/event-list-directive.css^
  %GSS_FLAGS%
 @ECHO OFF

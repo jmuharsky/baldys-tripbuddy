@@ -5,7 +5,6 @@ goog.require('tripbuddy.components.location.LocationDataService');
 goog.require('tripbuddy.components.location.list.LocationListViewCtrl');
 goog.require('tripbuddy.components.PageSectionStates');
 goog.require('tripbuddy.core.page.PageDirective');
-goog.require('tripbuddy.core.page.PageHeaderDirective');
 goog.require('tripbuddy.core.page.PageStateService');
 goog.require('tripbuddy.core.util.HttpPostFix');
 
@@ -21,10 +20,9 @@ tripbuddy.app.controller('locationListViewCtrl', tripbuddy.components.location.l
 
 /** Register directives */
 tripbuddy.app.directive('page', tripbuddy.core.page.PageDirective);
-tripbuddy.app.directive('pageHeader', tripbuddy.core.page.PageHeaderDirective);
 
 tripbuddy.app.directive('eventList', tripbuddy.components.event.EventListDirective);
 
 /** Register UI and state routing */
 tripbuddy.app.config(tripbuddy.components.PageSectionStates);
-tripbuddy.app.config(tripbuddy.core.util.HttpPostFix)
+tripbuddy.app.config(tripbuddy.core.util.HttpPostFix);

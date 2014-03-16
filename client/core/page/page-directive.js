@@ -4,6 +4,7 @@ goog.require('tripbuddy.core.page.PageStateService');
 
 /**
  * @param {tripbuddy.core.page.PageStateService} pageState
+ * @param $state
  * @returns {!PageHeaderDirective}
  * @ngInject
  * @export
@@ -13,13 +14,12 @@ tripbuddy.core.page.PageDirective = function(pageState, $state) {
     return {
         restrict: 'E',
         templateUrl: '/core/page/page-directive.html',
-        link: function(scope, el, attr) {
+        link: function(scope) {
             scope.pageState = pageState;
 
             scope.$watch(
                 'pageState.activePage',
-                angular.bind(this, function(new_val, old_val) {
-                    if (new_val == old_val) { return; }
+                angular.bind(this, function(new_val) {
                     $state.go(new_val);
                 }));
         }
