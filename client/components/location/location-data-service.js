@@ -113,7 +113,7 @@ LocationDataService.prototype.update = function(location) {
 LocationDataService.prototype.delete = function(location) {
     var data = {'id': location['id']};
 
-    this.http_({method: 'get', url: '/data/location/delete', responseType: 'json', data: data}).
+    this.http_({method: 'get', url: '/data/location/delete', responseType: 'json', params: data}).
         success(angular.bind(this, function(data, status) {
             this.locations.splice(this.locations.indexOf(location), 1);
             console.log(data);

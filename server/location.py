@@ -57,13 +57,13 @@ class CreateHandler(webapp2.RequestHandler):
 
     def post(self):
         response = json.loads(self.request.body)
+        errors = []
 
         try:
-            location_param = param_util.GetJson(response, 'location', True)
-            id = param_util.GetInteger(location_param, 'id', True)
+            location_param = param_util.GetParam(response, 'location', True)
             name = param_util.GetString(location_param, 'name', True)
-            address = param_util.GetJson(location_param, 'address')
-            geopt = param_util.GetJson(location_param, 'geopt')
+            address = param_util.GetParam(location_param, 'address')
+            geopt = param_util.GetParam(location_param, 'geopt')
             image_url = param_util.GetString(location_param, 'image_url')
             url = param_util.GetString(location_param, 'url')
             notes = param_util.GetString(location_param, 'notes')
@@ -117,9 +117,16 @@ class UpdateHandler(webapp2.RequestHandler):
                 else:
                     found_location.address = None
 
-                if geopt and geopt['lat'] or geopt['lon']:
-                    lat = geopt['lat'] or 0
-                    lon = geopt['lon'] or 0
+                if geopt:
+                    if 'lat' in geopt:
+                        lat = geopt['lat']
+                    else:
+                        lat = 0
+
+                    if 'lon' in geopt:
+                        lon = geopt['lon']
+                    else:
+                        lon = 0
 
                     found_location.geopt = ndb.GeoPt(lat=lat, lon=lon)
                 else:
@@ -145,7 +152,7 @@ class DeleteHandler(webapp2.RequestHandler):
         if not id:
             data = {'errors': [{'message': 'The "id" parameter is required.'}]}
         else:
-            found_location = location.Location.get_by_id(id)
+            found_location = LocationModel.get_by_id(id)
 
             if not found_location:
                 data = {'errors': [{'message': 'id %s is not found.' % id}]}
