@@ -7,6 +7,7 @@ import logging
 from models.location import AddressModel
 from models.location import LocationModel
 from util import param_util
+from util import json_util
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -21,33 +22,9 @@ class ListHandler(webapp2.RequestHandler):
         locations = LocationModel.query().fetch(1000)
 
         for current in locations:
-            if current.address:
-                address = {
-                    'street': current.address.street,
-                    'city': current.address.city,
-                    'state': current.address.state,
-                    'zip': current.address.zip
-                }
-            else:
-                address = None
+            location = json_util.to_dict(current)
 
-            if current.geopt:
-                geopt = {
-                    'lat': current.geopt.lat,
-                    'lon': current.geopt.lon
-                }
-            else:
-                geopt = None
-
-            data.append({
-                'id': current.key.id(),
-                'name': current.name,
-                'address': address,
-                'geopt': geopt,
-                'image_url': current.image_url,
-                'url': current.url,
-                'notes': current.notes
-            })
+            data.append(location)
 
         self.response.headers['Content-Type'] = 'application/json'
         self.response.write(json.dumps(data))

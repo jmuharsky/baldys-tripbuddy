@@ -18,8 +18,8 @@ REM the file.  If the pretty flag is turned on, the code will be more readable a
 REM and execute.
 ECHO Compiling Javascript files...
 @ECHO ON
-python lib/closure-library/closure/bin/build/closurebuilder.py^
- --root=lib/closure-library/^
+python ../lib/closure-library/closure/bin/build/closurebuilder.py^
+ --root=../lib/closure-library/^
  --root=client/^
  --namespace="tripbuddy.app"^
  --output_mode=compiled^
@@ -46,6 +46,6 @@ java -jar bin/gss-compiler.jar^
 
 ECHO Compilation complete.
 
-REM appcfg.py --oauth2 update .
+appcfg.py --oauth2 update .
 
 ECHO Deployment complete.
