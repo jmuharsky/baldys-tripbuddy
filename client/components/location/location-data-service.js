@@ -12,13 +12,13 @@ tripbuddy.components.location.LocationDataService = function($http) {
 
     /**
      * @export
-     * @type {Array}
+     * @type {Array<!LocationModel>}
      */
     this.locations = [];
 
     /**
      * @export
-     * @type {{data: string, enableRowSelection: boolean, multiSelect: boolean, enableCellEdit: boolean, enableCellEditOnFocus: boolean, columnDefs: *[], selectedItems: Array}}
+     * @type {ngGrid.GridOptions}
      */
     this.gridOptions = {
         data: 'data',

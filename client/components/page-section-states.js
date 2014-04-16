@@ -19,10 +19,12 @@ tripbuddy.components.PageSectionStates = function($stateProvider, $locationProvi
             views: {
                 'page.leftwell': { templateUrl: '/components/event/list/views/leftwell.html' },
                 'page.content': {
-                    templateUrl: '/components/event/list/views/content.html'},
+                    templateUrl: '/components/event/list/views/content.html',
+                    controller: 'eventListViewCtrl'},
                 'page.rightwell': { templateUrl: '/components/event/list/views/rightwell.html' },
                 'page.footer': { templateUrl: '/components/event/list/views/footer.html' },
-                'page.toolbar': { templateUrl: '/components/event/list/views/toolbar.html' }
+                'page.toolbar': { templateUrl: '/components/event/list/views/toolbar.html',
+                  controller: 'eventListViewCtrl' }
             }
         })
         .state('event', {

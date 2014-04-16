@@ -1,1 +1,11 @@
-EVENTS TOOLBAR
+<div class="dropdown">
+  <button type="button" class="btn btn-default dropdown-toggle">
+    {{ eventListPage.viewMode }}
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li ng-repeat="mode in eventListPage.viewModes.ALL">
+      <a ng-click="eventListPage.setViewMode(mode)">{{ mode }}</a>
+    </li>
+  </ul>
+</div>

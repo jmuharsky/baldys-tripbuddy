@@ -1,1 +1,3 @@
-<event-list></event-list>
+<event-list ng-show="eventListPage.viewMode == eventListPage.viewModes.PRETTY"></event-list>
+<div ng-show="eventListPage.viewMode == eventListPage.viewModes.DATAGRID"
+     class="content-grid" ng-grid="gridOptions"></div>

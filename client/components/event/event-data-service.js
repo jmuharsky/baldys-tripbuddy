@@ -5,33 +5,58 @@ goog.provide('tripbuddy.components.event.EventDataService');
  * @export
  */
 tripbuddy.components.event.EventDataService = function ($q, $timeout) {
-    /**
-     * @return {Promise.<Array.<EventModel>>}
-     * @export
-     */
-    this.list = function () {
-        var deferred = $q.defer();
+  /** @export @type {Array.<!EventModel>} */
+  this.events = SAMPLE_DATA;
 
-        $timeout(function () {
-            deferred.resolve(SAMPLE_DATA);
-        });
+  /**
+   * @return {Promise.<Array.<EventModel>>}
+   * @export
+   */
+  this.list = function () {
+      var deferred = $q.defer();
 
-        return deferred.promise;
-    };
+      $timeout(function () {
+          deferred.resolve(SAMPLE_DATA);
+      });
 
-    /**
-     * @type {string}
-     * @export
-     */
-    this.activePage = 'events';
+      return deferred.promise;
+  };
+
+  /**
+   * @export
+   * @type {ngGrid.GridOptions}
+   */
+  this.gridOptions = {
+    data: 'data',
+    enableRowSelection: true,
+    multiSelect: false,
+    enableCellEdit: true,
+    columnDefs: [
+      {field: 'id', displayName: 'ID', enableCellEdit: false, enableCellSelection: false},
+      {field: 'event_type', displayName: 'Type', enableCellEdit: true, enableCellSelection: true},
+      {field: 'location.name', displayName: 'Start Location', enableCellEdit: true, enableCellSelection: true},
+      {field: 'destination.name', displayName: 'Destination', enableCellEdit: true, enableCellSelection: true},
+      {field: 'url', displayName: 'Web URL', enableCellEdit: true, enableCellSelection: true},
+      {field: 'date', cellFilter: 'date:\'MMM dd, yyyy\'', displayName: 'Date', enableCellEdit: true, enableCellSelection: true},
+      {field: 'distance', displayName: 'Distance', enableCellEdit: true, enableCellSelection: true},
+      {field: 'hours', displayName: 'Hours', enableCellEdit: true, enableCellSelection: true},
+      {field: 'notes', displayName: 'Notes', enableCellEdit: true, enableCellSelection: true}],
+    selectedItems: []
+  };
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.activePage = 'events';
 };
 
 SAMPLE_DATA = [
     {'id': 1,
         'event_type': 'driving',
-        'start_location': {'name': 'Home', 'address': '27229 NE 145th S., Duvall WA 98019',
+        'location': {'name': 'Home', 'address': '27229 NE 145th S., Duvall WA 98019',
             'url': 'http://goo.gl/maps/WJ6c0'},
-        'end_location': {'name': 'Kalispell', 'address': '350 N Main St Kalispell, MT, 59901',
+        'destination': {'name': 'Kalispell', 'address': '350 N Main St Kalispell, MT, 59901',
             'url': 'http://goo.gl/maps/UYpl0'},
         'url': 'http://goo.gl/maps/cHsYd',
         'date': new Date(2014, 6, 18),
@@ -45,10 +70,10 @@ SAMPLE_DATA = [
         'nightly_price': 150, 'nights': 1},
     {'id': 3,
         'event_type': 'driving',
-        'start_location': {
+        'location': {
             'name': 'Kalispell', 'address': '350 N Main St Kalispell, MT, 59901',
             'url': 'http://goo.gl/maps/UYpl0'},
-        'end_location': {
+        'destination': {
             'name': 'Glacier National Park',
             'address': 'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434',
             'url': 'http://goo.gl/maps/L6w2J'},
@@ -65,11 +90,11 @@ SAMPLE_DATA = [
         'nightly_price': 250, 'nights': 2},
     {'id': 3,
         'event_type': 'driving',
-        'start_location': {
+        'location': {
             'name': 'Many Glacier Hotel',
             'address': 'Highway 8, Swiftcurrent Lake, Glacier National Park, MT 59434',
             'url': 'https://www.nationalparkreservations.com/lodge/glacier-many-glacier-hotel'},
-        'end_location': {
+        'destination': {
             'name': 'Sheridan',
             'address': '',
             'url': ''},
@@ -86,11 +111,11 @@ SAMPLE_DATA = [
         'nightly_price': 250, 'nights': 1},
     {'id': 3,
         'event_type': 'driving',
-        'start_location': {
+        'location': {
             'name': 'Sheridan',
             'address': '',
             'url': ''},
-        'end_location': {
+        'destination': {
             'name': 'Rapid City',
             'address': '',
             'url': ''},
@@ -107,11 +132,11 @@ SAMPLE_DATA = [
         'nightly_price': 200, 'nights': 3},
     {'id': 3,
         'event_type': 'driving',
-        'start_location': {
+        'location': {
             'name': 'Rapid City',
             'address': '',
             'url': ''},
-        'end_location': {
+        'destination': {
             'name': 'St. Paul',
             'address': '',
             'url': ''},
